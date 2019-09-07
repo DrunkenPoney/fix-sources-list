@@ -67,7 +67,12 @@ func (e Entry) MergeComponents(components ...Component) Entry {
 }
 
 func (e Entry) CanMergeWith(entry Entry) bool {
-    return strings.Join(e.groups()[1:5], " ") == strings.Join(entry.groups()[1:5], " ")
+    g1, g2 := e.groups()[1:], entry.groups()[1:]
+    s1, s2 := g1[0] + " ", g2[0] + " "
+    s1 += strings.Join(g1[2:4], " ")
+    s2 += strings.Join(g2[2:4], " ")
+    // TODO let user decide which one to keep if params are different
+    return s1 == s2
 }
 
 func (cl ComponentList) Contains(comp Component) bool {
